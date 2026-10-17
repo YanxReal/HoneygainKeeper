@@ -1,0 +1,17 @@
+# Xcode
+build/
+DerivedData/
+*.xcuserdata/
+xcuserdata/
+*.xccheckout
+*.moved-aside
+*.pbxuser
+*.mode1v3
+*.mode2v3
+*.perspectivev3
+
+# Compiled app (se regenera con xcodebuild, no versionar)
+HoneygainKeeper.app/
+
+# macOS
+.DS_Store

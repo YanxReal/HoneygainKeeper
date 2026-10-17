@@ -1,0 +1,41 @@
+name: CI
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build-and-check:
+    name: Parity + builds (macOS 26)
+    runs-on: macos-26
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Toolchain
+        run: |
+          sw_vers
+          xcodebuild -version
+          swift --version
+          python3 --version
+
+      - name: Localization parity (es/en)
+        run: python3 scripts/check_localization.py
+
+      - name: Build (Debug)
+        run: make build
+
+      - name: Build (Release)
+        run: make release
+
+      - name: Localizations bundled
+        run: |
+          APP="build/DerivedData/Build/Products/Debug/HoneygainKeeper.app"
+          test -f "$APP/Contents/Resources/es.lproj/Localizable.strings"
+          test -f "$APP/Contents/Resources/en.lproj/Localizable.strings"
+          echo "✅ es + en localizations present in the app bundle"

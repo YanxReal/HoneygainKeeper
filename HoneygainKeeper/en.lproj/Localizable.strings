@@ -1,0 +1,132 @@
+/* Localizable.strings — English
+   HoneygainKeeper. Keys mirror the Spanish source strings in code;
+   this file must always keep parity with es.lproj/Localizable.strings. */
+
+/* ---------- Navigation & general ---------- */
+"Panel" = "Panel";
+"Resumen" = "Overview";
+"Registros" = "Logs";
+"HoneygainKeeper" = "HoneygainKeeper";
+"HoneygainKeeper v%@" = "HoneygainKeeper v%@";
+
+/* ---------- Header & status ---------- */
+"Mantiene Honeygain activo en tu Mac" = "Keeps Honeygain running on your Mac";
+"Honeygain no instalado" = "Honeygain not installed";
+"Protegido" = "Protected";
+"Parcial" = "Partial";
+"Detenido" = "Stopped";
+
+/* ---------- Download card ---------- */
+"Honeygain no está instalado" = "Honeygain is not installed";
+"Se descargará desde el canal oficial y se instalará en /Applications." = "It will be downloaded from the official source and installed to /Applications.";
+"Descargar e instalar" = "Download and install";
+"Descarga la última versión oficial y la instala en /Applications." = "Downloads the latest official version and installs it to /Applications.";
+"Sitio oficial" = "Official website";
+"Abrir honeygain.com en tu navegador." = "Open honeygain.com in your browser.";
+"Cancelar" = "Cancel";
+
+/* ---------- Status cards ---------- */
+"Honeygain" = "Honeygain";
+"LaunchAgent (plist)" = "LaunchAgent (plist)";
+"Agente cargado" = "Agent loaded";
+"En ejecución" = "Running";
+"Instalado" = "Installed";
+"No instalado" = "Not installed";
+"Sí" = "Yes";
+"No" = "No";
+
+/* ---------- Activity ---------- */
+"Actividad" = "Activity";
+"Reinicios del agente" = "Agent restarts";
+"Última salida" = "Last exit";
+"Correcta (0)" = "Clean (0)";
+"Error (código %lld)" = "Error (code %lld)";
+"Tamaño del registro" = "Log size";
+
+/* ---------- Alerts & actions ---------- */
+"Honeygain se está reiniciando repetidamente por errores. Abre «Registros» para ver los detalles." = "Honeygain keeps restarting due to errors. Open “Logs” to see the details.";
+"Instalar LaunchAgent" = "Install LaunchAgent";
+"Instala o reinstala el LaunchAgent. Desde aquí puedes cambiar la opción «Mantener siempre activo»." = "Installs or reinstalls the LaunchAgent. You can change the “Keep always running” option from here.";
+"Instala Honeygain antes de activar el servicio." = "Install Honeygain before enabling the service.";
+"Reiniciar" = "Restart";
+"Cierra y vuelve a abrir Honeygain ahora." = "Quit and reopen Honeygain right now.";
+"Desinstalar" = "Uninstall";
+"Detiene el servicio y elimina su configuración. Honeygain seguirá instalado." = "Stops the service and removes its configuration. Honeygain stays installed.";
+"Actualizar" = "Refresh";
+"Actualiza el estado ahora." = "Refresh the status right now.";
+"Descartar el mensaje" = "Dismiss this message";
+
+/* ---------- Install popover ---------- */
+"Elige cómo quieres mantener activo Honeygain." = "Choose how you want to keep Honeygain running.";
+"Mantener siempre activo" = "Keep always running";
+"Activado: si cierras Honeygain, se vuelve a abrir automáticamente. Desactivado: solo se abre al iniciar sesión." = "On: if you quit Honeygain, it reopens automatically. Off: it only opens at login.";
+"Instalar" = "Install";
+
+/* ---------- Logs ---------- */
+"Buscar en el registro" = "Search the log";
+"Archivo" = "File";
+"Archivo de registro que se muestra" = "Log file being displayed";
+"Seguir" = "Follow";
+"Desplazarse automáticamente a las líneas nuevas" = "Scroll to new lines automatically";
+"Copiar" = "Copy";
+"Copia las líneas visibles al portapapeles" = "Copies the visible lines to the clipboard";
+"Exportar" = "Export";
+"Comparte el archivo de registro" = "Shares the log file";
+"Vaciar" = "Clear";
+"Vacía el registro actual. Los anteriores se conservan" = "Empties the current log. Previous ones are kept";
+"Consola" = "Console";
+"Abre el registro en la app Consola" = "Opens the log in the Console app";
+"Nada que mostrar" = "Nothing to show";
+"No hay contenido para mostrar." = "There is no content to display.";
+"Vista parcial · numeración relativa" = "Partial view · relative line numbers";
+"Actual" = "Current";
+"Anterior %lld" = "Previous %lld";
+"Todavía no hay registros." = "No logs yet.";
+"El archivo está vacío." = "The file is empty.";
+"1 línea." = "1 line.";
+"%lld líneas." = "%lld lines.";
+"%lld de 1 línea." = "%lld of 1 line.";
+"%lld de %lld líneas." = "%lld of %lld lines.";
+"Mostrando la última línea (máx. 256 KB)." = "Showing the last line (max. 256 KB).";
+"Mostrando las últimas %lld líneas (máx. 256 KB)." = "Showing the last %lld lines (max. 256 KB).";
+"Registro vaciado." = "Log cleared.";
+"No se pudo vaciar el registro: %@" = "The log could not be cleared: %@";
+
+/* ---------- Service messages ---------- */
+"Honeygain no está instalado en /Applications. Usa «Descargar e instalar» o descárgalo desde honeygain.com." = "Honeygain is not installed in /Applications. Use “Download and install” or get it from honeygain.com.";
+"No se encontró el ejecutable de Honeygain. La instalación puede estar incompleta; vuelve a instalarlo con «Descargar e instalar»." = "Honeygain’s executable was not found. The installation may be incomplete; reinstall it with “Download and install.”";
+"El LaunchAgent ya está instalado y activo." = "The LaunchAgent is already installed and active.";
+"No se pudo guardar la configuración del servicio: %@" = "The service configuration could not be saved: %@";
+"El servicio no se pudo cargar (código %lld): %@" = "The service could not be loaded (code %lld): %@";
+"Servicio instalado y en marcha. Honeygain se relanzará automáticamente si se cierra." = "Service installed and running. Honeygain will relaunch automatically if it quits.";
+"Servicio instalado. Honeygain se abrirá al iniciar sesión, pero no se relanzará si lo cierras." = "Service installed. Honeygain will open at login but won’t relaunch if you quit it.";
+"El servicio se instaló, pero aún no aparece como activo. Revisa la sección Registros." = "The service was installed but does not appear to be active yet. Check the Logs section.";
+"No se pudo detener el servicio (código %lld): %@" = "The service could not be stopped (code %lld): %@";
+"Servicio desinstalado. Honeygain ya no se gestionará automáticamente." = "Service uninstalled. Honeygain is no longer managed automatically.";
+"No se pudo eliminar la configuración del servicio: %@" = "The service configuration could not be deleted: %@";
+"El servicio no está instalado. Instálalo primero." = "The service is not installed. Install it first.";
+"No se pudo reiniciar Honeygain (código %lld): %@" = "Honeygain could not be restarted (code %lld): %@";
+"Honeygain se ha reiniciado." = "Honeygain has been restarted.";
+
+/* ---------- Honeygain installation ---------- */
+"Contactando con el servidor oficial…" = "Contacting the official server…";
+"Descargando Honeygain…" = "Downloading Honeygain…";
+"Abriendo la imagen descargada…" = "Opening the downloaded image…";
+"No se pudo abrir la imagen descargada: %@" = "The downloaded image could not be opened: %@";
+"La imagen no contiene la aplicación de Honeygain." = "The image does not contain the Honeygain app.";
+"Verificando la firma digital…" = "Verifying the digital signature…";
+"La firma digital no es válida. Instalación cancelada por seguridad." = "The digital signature is not valid. Installation cancelled for security.";
+"La firma digital no pertenece a Honeygain. Instalación cancelada por seguridad." = "The digital signature does not belong to Honeygain. Installation cancelled for security.";
+"El archivo descargado no es la aplicación oficial de Honeygain. Instalación cancelada." = "The downloaded file is not the official Honeygain app. Installation cancelled.";
+"Comprobando compatibilidad…" = "Checking compatibility…";
+"La versión %@ no puede ejecutarse en este Mac. Instala Rosetta o descarga Honeygain desde su sitio oficial." = "Version %@ cannot run on this Mac. Install Rosetta or download Honeygain from its official website.";
+"Instalando en /Applications…" = "Installing to /Applications…";
+"No se pudo copiar Honeygain a /Applications por falta de permisos. Descárgalo desde su sitio oficial e instálalo manualmente." = "Honeygain could not be copied to /Applications because of missing permissions. Download it from its official website and install it manually.";
+"Honeygain %@ se instaló correctamente en /Applications. Ya puedes instalar el LaunchAgent." = "Honeygain %@ was installed successfully in /Applications. You can now install the LaunchAgent.";
+"Descarga cancelada. No se ha realizado ningún cambio." = "Download cancelled. No changes were made.";
+"La instalación no se pudo completar: %@" = "The installation could not be completed: %@";
+"No se pudo conectar con honeygain.com. Comprueba tu conexión e inténtalo de nuevo." = "Could not connect to honeygain.com. Check your connection and try again.";
+"El servidor de descargas respondió con un error (%lld). Inténtalo más tarde o descarga Honeygain desde su sitio oficial." = "The download server returned an error (%lld). Try again later, or download Honeygain from its official website.";
+"El servidor de descargas devolvió una respuesta inesperada. Descarga Honeygain desde su sitio oficial." = "The download server returned an unexpected response. Download Honeygain from its official website.";
+"La descarga se interrumpió. Comprueba tu conexión e inténtalo de nuevo." = "The download was interrupted. Check your connection and try again.";
+"El archivo descargado está incompleto o dañado. Inténtalo de nuevo." = "The downloaded file is incomplete or damaged. Please try again.";
