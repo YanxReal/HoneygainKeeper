@@ -77,5 +77,6 @@ For UI changes, verify in **both languages** (System Settings → General → La
 ## 6. Repo Hygiene
 
 - Keep `CHANGELOG.md` updated under `[Unreleased]` for user-visible changes.
-- Do not commit `build/`, `DerivedData/`, `xcuserdata/` or `*.app` bundles (see `.gitignore`).
+- Do not commit `build/`, `dist/`, `DerivedData/`, `xcuserdata/` or `*.app` bundles (see `.gitignore`).
 - Only the shared scheme under `HoneygainKeeper.xcodeproj/xcshareddata/xcschemes/` is versioned — keep it working with `xcodebuild -scheme HoneygainKeeper`.
+- **Releases**: `make dist` generates `dist/HoneygainKeeper-<version>.{dmg,zip}`; upload them to the GitHub Release (`gh release upload <tag> dist/*`). Keep the first-launch quarantine walkthrough (System Settings → Open Anyway / `xattr -cr`) in the READMEs **and** in the release notes.

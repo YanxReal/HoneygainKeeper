@@ -11,7 +11,7 @@
 
 > 🌐 **Idioma:** [English](README.md) | **Español**
 
-[Visión general](#-visión-general) • [Funciones](#-funciones) • [Requisitos](#-requisitos) • [Inicio rápido](#-inicio-rápido) • [Estructura](#-estructura) • [Capturas](#-capturas) • [Cómo funciona](#-cómo-funciona) • [Comandos make](#-comandos-make) • [Seguridad](#-seguridad) • [Problemas](#-problemas) • [Roadmap](#-roadmap) • [Contribuir](#-contribuir) • [Licencia](#-licencia)
+[Visión general](#-visión-general) • [Funciones](#-funciones) • [Requisitos](#-requisitos) • [Descarga e instalación](#-descarga-e-instalación) • [Inicio rápido](#-inicio-rápido) • [Estructura](#-estructura) • [Capturas](#-capturas) • [Cómo funciona](#-cómo-funciona) • [Comandos make](#-comandos-make) • [Seguridad](#-seguridad) • [Problemas](#-problemas) • [Roadmap](#-roadmap) • [Contribuir](#-contribuir) • [Licencia](#-licencia)
 
 ---
 
@@ -20,17 +20,18 @@
 1. [Visión general](#-visión-general)
 2. [Funciones](#-funciones)
 3. [Requisitos](#-requisitos)
-4. [Inicio rápido](#-inicio-rápido)
-5. [Estructura](#-estructura)
-6. [Capturas](#-capturas)
-7. [Cómo funciona](#-cómo-funciona)
-8. [Comandos make](#-comandos-make)
-9. [Seguridad](#-seguridad)
-10. [Problemas](#-problemas)
-11. [Roadmap](#-roadmap)
-12. [Contribuir](#-contribuir)
-13. [Licencia](#-licencia)
-14. [Agradecimientos](#-agradecimientos)
+4. [Descarga e instalación](#-descarga-e-instalación)
+5. [Inicio rápido](#-inicio-rápido)
+6. [Estructura](#-estructura)
+7. [Capturas](#-capturas)
+8. [Cómo funciona](#-cómo-funciona)
+9. [Comandos make](#-comandos-make)
+10. [Seguridad](#-seguridad)
+11. [Problemas](#-problemas)
+12. [Roadmap](#-roadmap)
+13. [Contribuir](#-contribuir)
+14. [Licencia](#-licencia)
+15. [Agradecimientos](#-agradecimientos)
 
 ---
 
@@ -67,6 +68,43 @@ HoneygainKeeper es una app nativa para **macOS 26 (Tahoe)** que supervisa **Hone
 | **Swift** | 6 (modo de lenguaje) | Incluido con Xcode 26 |
 | **Python 3** | cualquiera | Solo para `make check` (paridad de traducciones) |
 | **Honeygain** | opcional | La app puede descargarlo e instalarlo por ti |
+
+## 📥 Descarga e instalación
+
+Descarga la última versión desde [Releases](https://github.com/YanxReal/HoneygainKeeper/releases/latest):
+
+| Asset | Uso |
+|---|---|
+| **`HoneygainKeeper-<versión>.dmg`** | Recomendado — ábrelo y arrastra la app a **Aplicaciones** |
+| `HoneygainKeeper-<versión>.zip` | App portátil — descomprímela y muévela a Aplicaciones |
+| Código fuente | Compílalo tú mismo (ver [Inicio rápido](#-inicio-rápido)) |
+
+### Primera apertura (cuarentena de macOS)
+
+La app va **firmada ad-hoc** (la notarización está en el [roadmap](#-roadmap)), así que macOS
+bloqueará la primera apertura con un aviso tipo *«Apple no puede verificar…»* — o incluso
+*«HoneygainKeeper está dañada»*. No es malware: es el **atributo de cuarentena** que macOS
+pone a todo lo que se descarga de internet. Quítalo con cualquiera de estas dos vías:
+
+**A. Ajustes del Sistema (sin Terminal):**
+
+1. Haz doble clic en la app una vez y pulsa **Fin/Hecho** en el aviso (no la muevas a la papelera).
+2. Abre **Ajustes del Sistema → Privacidad y seguridad** y baja del todo hasta **Seguridad**.
+3. Pulsa **Abrir de todas formas**, autentica con Touch ID / contraseña y confirma **Abrir**.
+
+> El botón «Abrir de todas formas» solo aparece justo después de un intento bloqueado y caduca en ~1 hora.
+
+**B. Terminal (funciona siempre — necesaria si el aviso dice «está dañada»):**
+
+```bash
+xattr -cr /Applications/HoneygainKeeper.app
+```
+
+Después, ábrela con normalidad.
+
+> 💡 El truco de toda la vida (clic derecho → Abrir) ya no existe desde macOS 15 — las vías
+> actuales son las dos de arriba. Si prefieres saltarte Gatekeeper, [compílala desde el código](#-inicio-rápido)
+> con `make run`.
 
 ## 🚀 Inicio rápido
 
@@ -135,6 +173,7 @@ El estado se lee con `launchctl print gui/$UID/com.yanx.honeygain-keepalive`, el
 | `make doctor` | Comprueba macOS 26+, Xcode 26+ y Python 3 |
 | `make build` | Compila la app en Debug (`build/DerivedData`) |
 | `make release` | Compila la app en Release |
+| `make dist` | Compila Release y empaqueta `dist/HoneygainKeeper-<versión>.{dmg,zip}` (para GitHub Releases) |
 | `make run` | Compila y abre la app |
 | `make check` | Paridad de localización + compilación Debug (lo que corre CI) |
 | `make logs` | Sigue el registro del servicio (`tail -f`) |
@@ -153,6 +192,7 @@ El estado se lee con `launchctl print gui/$UID/com.yanx.honeygain-keepalive`, el
 
 | Síntoma | Qué hacer |
 |---|---|
+| *«Apple no puede verificar…»* o *«está dañada»* al abrir por primera vez | Es la cuarentena de una app firmada ad-hoc — ver [Descarga e instalación](#-descarga-e-instalación) |
 | «El servicio se instaló, pero aún no aparece como activo» | `make agent-status`; desinstala y reinstala desde la app; revisa el panel Registros |
 | La instalación de Honeygain falla con error de red | Comprueba tu conexión con `resources.honeygain.com` o usa la descarga manual desde honeygain.com |
 | La píldora de estado muestra «Detenido» | El agente no está cargado: instálalo desde la app (la `launchctl bootstrap` la hace la app por ti) |

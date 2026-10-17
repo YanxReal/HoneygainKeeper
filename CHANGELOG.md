@@ -30,8 +30,13 @@ All notable changes to HoneygainKeeper are documented in this file. The format f
 - **Bilingual UI (es/en)** built on `Localizable.strings` with 100% key parity
   (109 keys per language), Spanish as the source language; `scripts/check_localization.py`
   enforces parity in CI.
-- **Tooling**: Makefile (`make doctor/build/run/release/check/logs/agent-status`),
-  GitHub Actions CI on `macos-26`, shared Xcode scheme, issue/PR templates and
-  Dependabot.
+- **Tooling**: Makefile (`make doctor/build/run/release/dist/check/logs/agent-status`),
+  GitHub Actions CI on `macos-26` with the DMG + ZIP uploaded as workflow
+  artifacts, shared Xcode scheme, issue/PR templates and Dependabot.
+- **Distribution**: `make dist` packages the Release build into
+  `HoneygainKeeper-<version>.dmg` (drag & drop to Applications) and
+  `.zip` (signature preserved via `ditto`); the READMEs and release notes
+  document the first-launch quarantine steps (System Settings → Open Anyway,
+  or `xattr -cr` in Terminal).
 - Project builds clean under **Swift 6 language mode** with zero warnings;
   target: macOS 26.0+, ad-hoc signing, no sandbox.

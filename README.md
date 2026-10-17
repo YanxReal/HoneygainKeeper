@@ -11,7 +11,7 @@
 
 > 🌐 **Language:** **English** | [Español](README.es.md)
 
-[Overview](#-overview) • [Features](#-features) • [Requirements](#-requirements) • [Quick Start](#-quick-start) • [Project structure](#-project-structure) • [Screenshots](#-screenshots) • [How it works](#-how-it-works) • [Make Targets](#-make-targets) • [Security](#-security) • [Troubleshooting](#-troubleshooting) • [Roadmap](#-roadmap) • [Contributing](#-contributing) • [License](#-license)
+[Overview](#-overview) • [Features](#-features) • [Requirements](#-requirements) • [Download & install](#-download--install) • [Quick Start](#-quick-start) • [Project structure](#-project-structure) • [Screenshots](#-screenshots) • [How it works](#-how-it-works) • [Make Targets](#-make-targets) • [Security](#-security) • [Troubleshooting](#-troubleshooting) • [Roadmap](#-roadmap) • [Contributing](#-contributing) • [License](#-license)
 
 ---
 
@@ -20,17 +20,18 @@
 1. [Overview](#-overview)
 2. [Features](#-features)
 3. [Requirements](#-requirements)
-4. [Quick Start](#-quick-start)
-5. [Project structure](#-project-structure)
-6. [Screenshots](#-screenshots)
-7. [How it works](#-how-it-works)
-8. [Make Targets](#-make-targets)
-9. [Security](#-security)
-10. [Troubleshooting](#-troubleshooting)
-11. [Roadmap](#-roadmap)
-12. [Contributing](#-contributing)
-13. [License](#-license)
-14. [Acknowledgements](#-acknowledgements)
+4. [Download & install](#-download--install)
+5. [Quick Start](#-quick-start)
+6. [Project structure](#-project-structure)
+7. [Screenshots](#-screenshots)
+8. [How it works](#-how-it-works)
+9. [Make Targets](#-make-targets)
+10. [Security](#-security)
+11. [Troubleshooting](#-troubleshooting)
+12. [Roadmap](#-roadmap)
+13. [Contributing](#-contributing)
+14. [License](#-license)
+15. [Acknowledgements](#-acknowledgements)
 
 ---
 
@@ -67,6 +68,43 @@ HoneygainKeeper is a native **macOS 26 (Tahoe)** app that supervises **Honeygain
 | **Swift** | 6 (language mode) | Ships with Xcode 26 |
 | **Python 3** | any | Only for `make check` (localization parity) |
 | **Honeygain** | optional | The app can download and install it for you |
+
+## 📥 Download & install
+
+Grab the latest build from [Releases](https://github.com/YanxReal/HoneygainKeeper/releases/latest):
+
+| Asset | Use |
+|---|---|
+| **`HoneygainKeeper-<version>.dmg`** | Recommended — open it and drag the app to **Applications** |
+| `HoneygainKeeper-<version>.zip` | Portable app bundle — unzip and move it to Applications |
+| Source code | Build it yourself (see [Quick Start](#-quick-start)) |
+
+### First launch (Gatekeeper quarantine)
+
+The app is **ad-hoc signed** (notarization is on the [roadmap](#-roadmap)), so macOS will block
+the first launch with a warning like *“Apple could not verify…”* — or even *“HoneygainKeeper is
+damaged”*. It is not malware: it is the **quarantine flag** that macOS puts on anything
+downloaded from the internet. Remove it with either of these paths:
+
+**A. System Settings (no Terminal):**
+
+1. Double-click the app once and click **Done** on the warning (do **not** move it to the Trash).
+2. Open **System Settings → Privacy & Security** and scroll all the way down to **Security**.
+3. Click **Open Anyway**, authenticate with Touch ID / password and confirm **Open**.
+
+> The “Open Anyway” button only appears right after a blocked attempt and expires after ~1 hour.
+
+**B. Terminal (works always — required when the warning says “damaged”):**
+
+```bash
+xattr -cr /Applications/HoneygainKeeper.app
+```
+
+Then open the app normally.
+
+> 💡 The classic right-click → Open bypass no longer exists since macOS 15 — the two paths
+> above are the current ones. If you prefer to skip Gatekeeper entirely,
+> [build from source](#-quick-start) with `make run`.
 
 ## 🚀 Quick Start
 
@@ -135,6 +173,7 @@ State is read with `launchctl print gui/$UID/com.yanx.honeygain-keepalive`, the 
 | `make doctor` | Checks macOS 26+, Xcode 26+ and Python 3 |
 | `make build` | Builds the app in Debug (`build/DerivedData`) |
 | `make release` | Builds the app in Release |
+| `make dist` | Builds Release and packages `dist/HoneygainKeeper-<version>.{dmg,zip}` (for GitHub Releases) |
 | `make run` | Builds and launches the app |
 | `make check` | Localization parity check + Debug build (what CI runs) |
 | `make logs` | Follows the service log (`tail -f`) |
@@ -153,6 +192,7 @@ State is read with `launchctl print gui/$UID/com.yanx.honeygain-keepalive`, the 
 
 | Symptom | What to do |
 |---|---|
+| *“Apple could not verify…”* or *“is damaged”* on first launch | It's the quarantine flag of an ad-hoc signed app — see [Download & install](#-download--install) |
 | «Service installed but not active yet» | `make agent-status`; uninstall and reinstall from the app; check the Logs panel |
 | Honeygain install fails with a network error | Check your connection to `resources.honeygain.com` or use the manual download from honeygain.com |
 | Status pill shows «Stopped» | The agent is not loaded: install it from the app (`launchctl bootstrap` is executed for you) |

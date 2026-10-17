@@ -15,7 +15,7 @@ XCB        := xcodebuild -project $(PROJECT) -scheme $(SCHEME) -destination 'gen
 
 .DEFAULT_GOAL := help
 
-.PHONY: help doctor build release run check logs agent-status open clean
+.PHONY: help doctor build release run dist check logs agent-status open clean
 
 help: ## Muestra esta ayuda
 	@awk 'BEGIN {FS = ":.*##"; printf "\n\033[1mHoneygainKeeper\033[0m — comandos disponibles:\n\n"} \
@@ -42,6 +42,9 @@ release: ## Compila la app en Release
 	@echo "⏳ Compilando (Release)…"
 	@$(XCB) -configuration Release build
 	@echo "✅ Release: $(APP_RELEASE)"
+
+dist: release ## Empaqueta Release en dist/ (DMG + ZIP para GitHub Releases)
+	@scripts/package.sh
 
 run: build ## Compila (Debug) y abre la app
 	@open "$(APP_DEBUG)"
