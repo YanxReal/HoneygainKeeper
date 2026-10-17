@@ -79,4 +79,4 @@ For UI changes, verify in **both languages** (System Settings → General → La
 - Keep `CHANGELOG.md` updated under `[Unreleased]` for user-visible changes.
 - Do not commit `build/`, `dist/`, `DerivedData/`, `xcuserdata/` or `*.app` bundles (see `.gitignore`).
 - Only the shared scheme under `HoneygainKeeper.xcodeproj/xcshareddata/xcschemes/` is versioned — keep it working with `xcodebuild -scheme HoneygainKeeper`.
-- **Releases**: `make dist` generates `dist/HoneygainKeeper-<version>.{dmg,zip}`; upload them to the GitHub Release (`gh release upload <tag> dist/*`). Keep the first-launch quarantine walkthrough (System Settings → Open Anyway / `xattr -cr`) in the READMEs **and** in the release notes.
+- **Releases**: `make dist` generates `dist/HoneygainKeeper-<version>.{dmg,zip}` and `dist/SHA256SUMS.txt`; pushing a `v*` tag runs `.github/workflows/release.yml` (build from tag, version check, attach assets). Manual fallback: `gh release upload <tag> dist/*`. Keep the first-launch quarantine walkthrough (System Settings → Open Anyway / `xattr -cr`) in the READMEs **and** in the release notes.

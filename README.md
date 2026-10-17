@@ -77,7 +77,15 @@ Grab the latest build from [Releases](https://github.com/YanxReal/HoneygainKeepe
 |---|---|
 | **`HoneygainKeeper-<version>.dmg`** | Recommended — open it and drag the app to **Applications** |
 | `HoneygainKeeper-<version>.zip` | Portable app bundle — unzip and move it to Applications |
+| `SHA256SUMS.txt` | Per-file checksums — verify with `shasum -a 256 -c SHA256SUMS.txt` |
 | Source code | Build it yourself (see [Quick Start](#-quick-start)) |
+
+Verify a download (optional):
+
+```bash
+cd ~/Downloads
+shasum -a 256 -c SHA256SUMS.txt
+```
 
 ### First launch (Gatekeeper quarantine)
 
@@ -173,7 +181,7 @@ State is read with `launchctl print gui/$UID/com.yanx.honeygain-keepalive`, the 
 | `make doctor` | Checks macOS 26+, Xcode 26+ and Python 3 |
 | `make build` | Builds the app in Debug (`build/DerivedData`) |
 | `make release` | Builds the app in Release |
-| `make dist` | Builds Release and packages `dist/HoneygainKeeper-<version>.{dmg,zip}` (for GitHub Releases) |
+| `make dist` | Builds Release and packages `dist/HoneygainKeeper-<version>.{dmg,zip}` + `SHA256SUMS.txt` (for GitHub Releases) |
 | `make run` | Builds and launches the app |
 | `make check` | Localization parity check + Debug build (what CI runs) |
 | `make logs` | Follows the service log (`tail -f`) |

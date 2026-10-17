@@ -31,5 +31,9 @@ hdiutil create -volname "HoneygainKeeper" -srcfolder "$STAGE" -ov -format UDZO -
 rm -f "$DIST/$NAME.zip"
 ditto -c -k --keepParent "$APP_PATH" "$DIST/$NAME.zip"
 
+# --- Checksums (verificación manual tras la descarga) ---
+(cd "$DIST" && shasum -a 256 "$NAME.dmg" "$NAME.zip" > SHA256SUMS.txt)
+
 echo "✅ $DIST/$NAME.dmg"
 echo "✅ $DIST/$NAME.zip"
+echo "✅ $DIST/SHA256SUMS.txt"

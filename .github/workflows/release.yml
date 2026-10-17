@@ -1,0 +1,65 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Tag to package and attach assets to (e.g. v1.0.0)"
+        required: true
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release-${{ github.event.inputs.tag || github.ref_name }}
+  cancel-in-progress: false
+
+jobs:
+  package-and-publish:
+    name: Package + publish (macOS 26)
+    runs-on: macos-26
+    env:
+      RELEASE_TAG: ${{ github.event.inputs.tag || github.ref_name }}
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          ref: ${{ github.event.inputs.tag || github.ref }}
+
+      - name: Toolchain
+        run: |
+          sw_vers
+          xcodebuild -version
+          swift --version
+
+      - name: Localization parity (es/en)
+        run: python3 scripts/check_localization.py
+
+      - name: Package (Release + DMG + ZIP + SHA256SUMS)
+        run: make dist
+
+      - name: Tag matches app version
+        run: |
+          APP_VERSION=$(/usr/libexec/PlistBuddy -c "Print :CFBundleShortVersionString" \
+            build/DerivedData/Build/Products/Release/HoneygainKeeper.app/Contents/Info.plist)
+          TAG_VERSION="${RELEASE_TAG#v}"
+          if [ "$APP_VERSION" != "$TAG_VERSION" ]; then
+            echo "❌ App version ($APP_VERSION) does not match tag ($RELEASE_TAG)"
+            exit 1
+          fi
+          echo "✅ App $APP_VERSION matches tag $RELEASE_TAG"
+
+      - name: Create release if missing (auto notes)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release view "$RELEASE_TAG" --repo "$GITHUB_REPOSITORY" >/dev/null 2>&1 || \
+            gh release create "$RELEASE_TAG" --repo "$GITHUB_REPOSITORY" \
+              --title "HoneygainKeeper $RELEASE_TAG" --generate-notes
+
+      - name: Upload installers + checksums
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh release upload "$RELEASE_TAG" --repo "$GITHUB_REPOSITORY" --clobber dist/*

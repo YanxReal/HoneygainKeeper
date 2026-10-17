@@ -77,7 +77,15 @@ Descarga la última versión desde [Releases](https://github.com/YanxReal/Honeyg
 |---|---|
 | **`HoneygainKeeper-<versión>.dmg`** | Recomendado — ábrelo y arrastra la app a **Aplicaciones** |
 | `HoneygainKeeper-<versión>.zip` | App portátil — descomprímela y muévela a Aplicaciones |
+| `SHA256SUMS.txt` | Sumas de verificación — compruébalas con `shasum -a 256 -c SHA256SUMS.txt` |
 | Código fuente | Compílalo tú mismo (ver [Inicio rápido](#-inicio-rápido)) |
+
+Verificar una descarga (opcional):
+
+```bash
+cd ~/Downloads
+shasum -a 256 -c SHA256SUMS.txt
+```
 
 ### Primera apertura (cuarentena de macOS)
 
@@ -173,7 +181,7 @@ El estado se lee con `launchctl print gui/$UID/com.yanx.honeygain-keepalive`, el
 | `make doctor` | Comprueba macOS 26+, Xcode 26+ y Python 3 |
 | `make build` | Compila la app en Debug (`build/DerivedData`) |
 | `make release` | Compila la app en Release |
-| `make dist` | Compila Release y empaqueta `dist/HoneygainKeeper-<versión>.{dmg,zip}` (para GitHub Releases) |
+| `make dist` | Compila Release y empaqueta `dist/HoneygainKeeper-<versión>.{dmg,zip}` + `SHA256SUMS.txt` (para GitHub Releases) |
 | `make run` | Compila y abre la app |
 | `make check` | Paridad de localización + compilación Debug (lo que corre CI) |
 | `make logs` | Sigue el registro del servicio (`tail -f`) |

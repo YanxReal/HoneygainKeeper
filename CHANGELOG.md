@@ -34,8 +34,10 @@ All notable changes to HoneygainKeeper are documented in this file. The format f
   GitHub Actions CI on `macos-26` with the DMG + ZIP uploaded as workflow
   artifacts, shared Xcode scheme, issue/PR templates and Dependabot.
 - **Distribution**: `make dist` packages the Release build into
-  `HoneygainKeeper-<version>.dmg` (drag & drop to Applications) and
-  `.zip` (signature preserved via `ditto`); the READMEs and release notes
+  `HoneygainKeeper-<version>.dmg` (drag & drop to Applications), `.zip`
+  (signature preserved via `ditto`) and `SHA256SUMS.txt`; a tag-triggered
+  Release workflow (`.github/workflows/release.yml`) builds from the tag and
+  attaches all three to the GitHub Release. The READMEs and release notes
   document the first-launch quarantine steps (System Settings → Open Anyway,
   or `xattr -cr` in Terminal).
 - Project builds clean under **Swift 6 language mode** with zero warnings;
