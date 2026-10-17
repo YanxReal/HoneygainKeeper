@@ -3,7 +3,7 @@
 > **This is the single source of truth for any AI agent (OpenCode, Codex, Claude Code, Cursor, Copilot, etc.) working in this repository.**
 > If you are an AI, read this whole file before editing anything. If you are a human, this tells you what to expect from AI.
 
-**Version:** 1.0.0 · **Applies to:** `YanxReal/HoneygainKeeper` · **Stack:** Swift 6 (language mode) / SwiftUI on macOS 26+, Xcode project, Make, Python (parity script)
+**Version:** 1.1.0 · **Applies to:** `YanxReal/HoneygainKeeper` · **Stack:** Swift 6 (language mode) / SwiftUI on macOS 26+, Xcode project, Make, Python (parity script)
 
 ---
 
@@ -79,4 +79,66 @@ For UI changes, verify in **both languages** (System Settings → General → La
 - Keep `CHANGELOG.md` updated under `[Unreleased]` for user-visible changes.
 - Do not commit `build/`, `dist/`, `DerivedData/`, `xcuserdata/` or `*.app` bundles (see `.gitignore`).
 - Only the shared scheme under `HoneygainKeeper.xcodeproj/xcshareddata/xcschemes/` is versioned — keep it working with `xcodebuild -scheme HoneygainKeeper`.
-- **Releases**: `make dist` generates `dist/HoneygainKeeper-<version>.{dmg,zip}` and `dist/SHA256SUMS.txt`; pushing a `v*` tag runs `.github/workflows/release.yml` (build from tag, version check, attach assets). Manual fallback: `gh release upload <tag> dist/*`. Keep the first-launch quarantine walkthrough (System Settings → Open Anyway / `xattr -cr`) in the READMEs **and** in the release notes.
+- **Releases**: follow the step-by-step in §7. `dist/` is gitignored — never commit DMG/ZIP/app bundles.
+
+## 7. Release Process — Publishing a New Version
+
+The pipeline is fully automated by `.github/workflows/release.yml`: **bump the version → tag → push the tag → polish the notes.** The workflow runs from the tagged commit, **fails if the app version does not match the tag**, packages the DMG + ZIP + `SHA256SUMS.txt` and attaches them to the GitHub Release.
+
+### Step by step (for AI agents)
+
+```bash
+# 1. Bump the version — MARKETING_VERSION = X.Y.Z (SemVer) appears TWICE in the
+#    project (Debug + Release). Optional: bump CURRENT_PROJECT_VERSION (build).
+grep -n "MARKETING_VERSION" HoneygainKeeper.xcodeproj/project.pbxproj
+
+# 2. CHANGELOG.md — move the [Unreleased] entries into a new section:
+#    ## [X.Y.Z] - YYYY-MM-DD
+
+# 3. Verify before tagging (CI gate + smoke test; both languages if UI changed)
+make check      # localization parity + Debug build
+make run        # launch the app, confirm state and no warnings
+
+# 4. Commit, push and tag — the tag push triggers the Release workflow
+git add -A
+git commit -m "chore: versión X.Y.Z"
+git push origin main
+git tag vX.Y.Z
+git push origin vX.Y.Z
+
+# 5. Watch the workflow — it builds from the tag and attaches the assets
+gh run list --workflow release.yml
+gh run watch <run-id> --exit-status
+
+# 6. Replace the auto-generated notes with the house template — model: release v1.0.0
+#    (Downloads table with DMG / ZIP / SHA256SUMS / source + "First launch
+#     (Gatekeeper quarantine)" walkthrough + highlights + 🇪🇸 line to README.es.md)
+gh release edit vX.Y.Z --notes "<house template>"
+```
+
+To rebuild and re-upload the assets of an **existing tag** (corrupted upload, stale build), run the workflow manually — it uses `--clobber`:
+
+```bash
+gh workflow run release.yml -f tag=vX.Y.Z
+```
+
+### Rules
+
+- **`MARKETING_VERSION` must equal the tag without the `v`** (`1.0.0` == `v1.0.0`), or the workflow stops. Never tag a version different from the app.
+- Publish **only CI-built assets**; if a local build must be uploaded, regenerate `SHA256SUMS.txt` in the same directory (`make dist` does) and verify with `shasum -a 256 -c` before uploading.
+- Keep the **first-launch quarantine walkthrough** (System Settings → Open Anyway / `xattr -cr`) in the release notes **and** in both READMEs — it is mandatory content for every release.
+- Mirror user-facing changes (features, `docs/images/overview-{en,es}.png` screenshots) in `README.md` + `README.es.md` in the same commit (§1).
+- **Never move or delete a published tag** users may have downloaded. Exception: a brand-new broken tag may be force-moved *before* announcing — e.g. a tag predating the packaging scripts: `git tag -f vX.Y.Z && git push -f origin vX.Y.Z` (this re-runs the Release workflow).
+- Manual fallback (local rebuild / CI unavailable):
+
+```bash
+make dist                                     # dist/HoneygainKeeper-X.Y.Z.{dmg,zip} + SHA256SUMS.txt
+(cd dist && shasum -a 256 -c SHA256SUMS.txt)
+gh release create vX.Y.Z --title "HoneygainKeeper vX.Y.Z" --generate-notes
+gh release upload vX.Y.Z --clobber dist/*
+gh release edit vX.Y.Z --notes "<house template>"
+```
+
+> House template for step 6 / the manual fallback: copy the notes of
+> [release v1.0.0](https://github.com/YanxReal/HoneygainKeeper/releases/tag/v1.0.0) and update the version
+> numbers, asset names and the 🇪🇸 pointer.
