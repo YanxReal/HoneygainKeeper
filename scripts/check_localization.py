@@ -2,7 +2,7 @@
 """Verifica paridad es/en de Localizable.strings y cobertura de claves en el código."""
 import re, sys, pathlib
 
-root = pathlib.Path("/Users/yanx/Desktop/HoneygainKeeper/HoneygainKeeper")
+root = pathlib.Path(__file__).resolve().parent.parent / "HoneygainKeeper"
 es_path = root / "es.lproj/Localizable.strings"
 en_path = root / "en.lproj/Localizable.strings"
 
